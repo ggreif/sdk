@@ -20,6 +20,10 @@
       packages = [
         toolchain
       ];
+      buildInputs = [
+        pkgs.clang_19
+        pkgs.cmake
+      ];
     };
   };
 }
