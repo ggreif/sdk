@@ -20,7 +20,7 @@
       packages = [
         toolchain
       ];
-      buildInputs = [
+      nativeBuildInputs = [
         pkgs.clang_19
         pkgs.cmake
       ];
