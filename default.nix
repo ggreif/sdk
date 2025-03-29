@@ -6,13 +6,21 @@ pkgs.rustPlatform.buildRustPackage {
 
   cargoLock = {
     lockFile = ./Cargo.lock;
-    outputHash = "your-cargo-lock-hash";  # Replace with the actual hash of your Cargo.lock
+    outputHashes = {
+      "derive_more-0.99.8-alpha.0" = pkgs.lib.fakeHash;
+      "ic-agent-0.39.3" = pkgs.lib.fakeHash;
+      "ic-base-types-0.9.0" = pkgs.lib.fakeHash;
+      "ic-btc-interface-0.1.0" = pkgs.lib.fakeHash;
+      "ic-certification-2.3.0" = pkgs.lib.fakeHash;
+      "pocket-ic-7.0.0" = pkgs.lib.fakeHash;
+  };
   };
 
   # Specify the Rust version
-  rustc = pkgs.rustup.rustToolchainFromProfile {
+  rustc = pkgs.rustup.profile {
     profile = "minimal";
     toolchain = "stable";
+    version = "1.85";
     components = [ "rust-std" "rustc" "cargo" ];
   };
 
@@ -26,7 +34,7 @@ pkgs.rustPlatform.buildRustPackage {
 
   # Enable tests and benchmarks
   doCheck = true;
-  doBenchmark = true;
+  doBenchmark = false;
 
   # Additional build steps (e.g., generating protobuf files)
   preBuild = ''
