@@ -15,6 +15,7 @@
       overlays = [rust-overlay.overlays.default];
     };
     toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+    manifest = (pkgs.lib.importTOML ./src/dfx/Cargo.toml).package;
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = [
@@ -31,8 +32,8 @@
     };
 
     packages.${system}.default = pkgs.rustPlatform.buildRustPackage rec {
-      pname = "dfx";
-      version = "0.25.1";
+      pname = manifest.name;
+      inherit (manifest) version;
       cargoLock.lockFile = ./Cargo.lock;
       src = pkgs.lib.cleanSource ./.;
       cargoLock = {
